@@ -66,5 +66,40 @@ app.post("/operations", (request, response) => {
 // =============================================================================
 // Part B TODO: Add your code support two new API's /add and /divide here.
 
+//POST endpoint /add
+app.post("/add", (request, response) => {
+  const {
+    num1, num2
+  }  = request.body; 
+  if (typeof num1 != "number" || typeof num2 != "number") {
+    return response.status(400).send("cannot add, invalid argument(s)");
+  }
+  else{
+    return response.json({
+      status:200,
+      sum: (num1 + num2)
+    });
+}
+}); 
+
+
+//POST endpoint /divide
+app.post("/divide", (request, response) => {
+  const {
+    num1, num2
+  } = request.body; 
+  if (typeof num1 != 'number' || typeof num2 != 'number') {
+    return response.status(400).send("cannot divide, invalid argument(s)");
+  }
+  if (num2 == 0)
+  {
+    return response.status(400).send("cannot divide by zero");
+  }
+  return response.json({
+    status:200,
+    sum: (num1 / num2)
+  });
+});
+
 module.exports = app.listen(3000);
 console.log("3000 is the magic port");

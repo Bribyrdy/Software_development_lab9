@@ -76,7 +76,51 @@ describe("Server!", () => {
   // ===========================================================================
   // TODO: Please add your test cases for part B here.
 
+  // positive Add case 
+  it("adds two numbers", (done) => { 
+    chai.request(server)
+    .post("/add")
+    .send({ num1: 2, num2: 3})
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.sum.should.equals(5); 
+      done(); 
+    });
+  }); 
 
+  // negative Add case 
+  it("errors for strings", (done) =>{
+    chai.request(server)
+    .post("/add")
+    .send({num1: "hello", num2: 6})
+    .end((err, res) => {
+      res.should.have.status(400);
+      done();
+    });
+  });
+
+  //positive divide case 
+  it("divides two numbers", (done) => {
+    chai.request(server)
+    .post("/divide")
+    .send({num1:4, num2:2})
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.sum.should.equals(2);
+      done(); 
+    });
+  });
+
+  //negative divide case 
+  it("errors for dividing by 0", (done) => {
+    chai.request(server)
+    .post("/divide")
+    .send({num1: 7, num2: 0})
+    .end((err, res) => {
+      res.should.have.status(400); 
+      done(); 
+    });
+  });
 
 
 });
